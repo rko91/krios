@@ -1,0 +1,50 @@
+extends ../layout
+
+block content
+    #images.container-fluid
+        .row
+            .full-size
+                br
+                br
+                br
+                br
+                h3(style="text-align: center;") Recent Images
+                if (id)
+                    include partials/imagePartial1.pug
+                        each item in id
+                            .gallery
+                                a(href="../../public/images/" + item.file_name style="color: black; text-decoration: none")
+                                    img(src="../../public/images/" + item.file_name alt="Krios Image")
+                                .desc #{item.image_name}
+                br
+                br
+                br
+                .row
+                    .col-4
+                    .col-4
+                        form(action="/set_id" method="post" style="padding: 15px;")
+                            h4(style="text-align: center;") Link Image SetID
+                            input(type="text" name="set_id" placeholder="Enter SetID" style="border-radius: 5px;")
+                            button(type="submit" class="btn btn-outline-success btn-lg") Submit
+                    .col-4
+            .mobile-size
+                br
+                h3(style="text-align: center;") Recent Images
+                if (id)
+                    include partials/imagePartial2
+                            each item in id
+                                .gallery
+                                    a(href="../../public/images/" + item.file_name style="color: black; text-decoration: none")
+                                        img(src="../../public/images/" + item.file_name alt="Krios Image")
+                                    .desc #{item.image_name}
+                br
+                br
+                .row
+                    .col-1
+                    .col-10
+                        fform(action="/set_id" method="post" style="padding: 15px;")
+                            h4(style="text-align: center;") Link Image SetID
+                            input(type="text" name="set_id" placeholder="Enter SetID" style="border-radius: 5px;")
+                            button(type="submit" class="btn btn-outline-success btn-lg") Submit
+                    .col-1
+    
