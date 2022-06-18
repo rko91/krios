@@ -1,5 +1,6 @@
-const express = require('express')
-const router = express.Router()
+const express = require('express');
+const router = express.Router();
+const Image = require('../models/image');
 
 // GET Landing Page
 router.get('/', function(req, res) {
@@ -11,7 +12,7 @@ router.get('/', function(req, res) {
 router.post('/set_id', function(req, res) {
     res.render('images/set_id', {
         title: 'SetID'
-    })
-})
+    });
+});
 
 module.exports = router;
