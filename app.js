@@ -1,6 +1,6 @@
-// if (process.env.NODE_ENV !== 'production') {
-//     require('dotenv').load()
-// }
+if (process.env.NODE_ENV !== 'production') {
+    require('dotenv').config({path:'./.env'})
+}
 
 const createError = require('http-errors');
 const express = require('express');
@@ -10,7 +10,6 @@ const bodyParser = require('body-parser');
 const logger = require('morgan');
 const session = require('express-session');
 let pgp = require('pg-promise')();
-const mongoose = require('mongoose');
 
 var indexRouter = require('./routes/index');
 var accountRouter = require('./routes/account');
@@ -30,16 +29,17 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+const mongoose = require('mongoose');
+mongoose.connect(process.env.DATABASE_URL, { useNewURLParser: true});
+const db = mongoose.connection;
+db.on('error', error => console.error(error));
+db.once('open', () => console.log('Connected to Mongoose'));
+
 app.use('/', indexRouter);
 app.use('/account', accountRouter);
 app.use('/about', aboutRouter);
 app.use('/images', imageRouter);
 app.use('/contact', contactRouter);
-
-// mongoose.connect(process.env.DATABASE_URL, { useNewURLParser: true});
-// const db = mongoose.connection;
-// db.on('error', error => console.error(error));
-// db.once('open', () => console.log('Connected to Mongoose'));
 
 // Catch 404 and forward to Error Handler
 app.use(function(req, res, next) {
